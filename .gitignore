@@ -2,3 +2,4 @@ text/
 *.log
 build/
 .claude/
+tools/art_src/

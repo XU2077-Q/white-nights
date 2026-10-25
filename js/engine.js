@@ -20,9 +20,20 @@ let currentMusic = null;   // 名字
 let noteOpen = false, backlogOpen = false, inTitle = true, cgOpen = false, openingOn = false;
 let runId = 0;             // 每开一局 +1，作废上一局残留的定时器
 
-// ── 音频引擎（Web Audio：交叉淡化 + 循环；manifest 白名单，缺文件不请求不报错） ──
+// 探测模式：file:// 直开时 fetch 被浏览器拦死，manifest 拿不到 → 逐个 Image 试 .jpg/.png，失败回落 .svg 占位
+function probeImg(url) {
+  return new Promise(res => {
+    const im = new Image();
+    im.onload = () => res(url);
+    im.onerror = () => res(null);
+    im.src = url;
+  });
+}
+
+// ── 音频引擎（Web Audio：交叉淡化 + 循环；manifest 白名单，缺文件不请求不报错；
+//    file:// 探测模式回落 HTMLAudio，牺牲交叉淡化换出声） ──
 const Audio = {
-  ctx: null, master: null, cur: null, buffers: {}, muted: false, manifest: null,
+  ctx: null, master: null, cur: null, buffers: {}, muted: false, manifest: null, probe: false,
   init() {
     if (this.ctx) return;
     this.ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -31,10 +42,12 @@ const Audio = {
     this.master.connect(this.ctx.destination);
   },
   async ready() {
-    if (!this.manifest) {
-      this.manifest = await fetch('assets/audio/manifest.json')
-        .then(r => r.ok ? r.json() : { mp3: [] })
-        .catch(() => ({ mp3: [] }));
+    if (!this.manifest && !this.probe) {
+      try {
+        const r = await fetch('assets/audio/manifest.json');
+        if (!r.ok) throw new Error(r.status);
+        this.manifest = await r.json();
+      } catch (e) { this.probe = true; }
     }
     return this.manifest;
   },
@@ -49,12 +62,16 @@ const Audio = {
     return this.buffers[name];
   },
   async play(name) {
-    if (!this.ctx || name === currentMusic) return;
+    if (name === currentMusic) return;
     const old = this.cur;
     if (old) this.fadeOut(old, 2.2);
     this.cur = null;
     currentMusic = name;
     if (!name) return;
+    await this.ready();
+    if (this.probe) return this.playEl(name);   // file:// 直开兜底
+    if (!this.ctx) { currentMusic = null; return; }
+    if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
     let buf;
     try { buf = await this.buffer(name); }
     catch (e) { console.warn('音频解码失败', name, e); return; }
@@ -70,7 +87,32 @@ const Audio = {
     this.cur = { src, g };
     if (this.muted) this.master.gain.value = 0;
   },
+  // 探测模式的 HTMLAudio 播放：无交叉淡化，rAF 线性淡入
+  playEl(name) {
+    const el = document.createElement('audio');
+    el.src = TRACKS[name]; el.loop = true; el.volume = 0;
+    el.play().catch(e => { console.warn('音频播放失败', name, e); if (currentMusic === name) currentMusic = null; });
+    const t0 = performance.now(), cur = { el };
+    this.cur = cur;
+    const tick = () => {
+      if (this.cur !== cur) return;
+      const k = Math.min(1, (performance.now() - t0) / 2500);
+      el.volume = this.muted ? 0 : 0.9 * k;
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    tick();
+  },
   fadeOut(node, sec) {
+    if (node.el) {  // HTMLAudio 兜底节点
+      const el = node.el, v0 = el.volume, t0 = performance.now();
+      const tick = () => {
+        const k = Math.min(1, (performance.now() - t0) / (sec * 1000));
+        el.volume = v0 * (1 - k);
+        if (k < 1) requestAnimationFrame(tick); else { el.pause(); el.removeAttribute('src'); }
+      };
+      tick();
+      return;
+    }
     const t = this.ctx.currentTime;
     node.g.gain.cancelScheduledValues(t);
     node.g.gain.setValueAtTime(node.g.gain.value, t);
@@ -80,22 +122,26 @@ const Audio = {
   toggleMute() {
     this.muted = !this.muted;
     if (this.ctx) this.master.gain.linearRampToValueAtTime(this.muted ? 0 : 0.9, this.ctx.currentTime + 0.3);
+    if (this.cur && this.cur.el) this.cur.el.volume = this.muted ? 0 : 0.9;
     $('btnMute').textContent = this.muted ? '♪̸' : '♪';
   },
 };
 
 // ── 背景（manifest 声明哪些有 .jpg 成图，其余用 .svg 占位；双层交叉淡化） ──
 const Bg = {
-  front: 'bgA', cache: {}, manifest: null,
+  front: 'bgA', cache: {}, manifest: null, probe: false,
   async resolve(name) {
     if (this.cache[name]) return this.cache[name];
-    if (!this.manifest) {
-      this.manifest = await fetch('assets/bg/manifest.json')
-        .then(r => r.ok ? r.json() : { jpg: [] })
-        .catch(() => ({ jpg: [] }));
+    if (!this.manifest && !this.probe) {
+      try {
+        const r = await fetch('assets/bg/manifest.json');
+        if (!r.ok) throw new Error(r.status);
+        this.manifest = await r.json();
+      } catch (e) { this.probe = true; }
     }
-    const ext = (this.manifest.jpg || []).includes(name) ? 'jpg' : 'svg';
-    const url = `assets/bg/${name}.${ext}`;
+    const url = this.probe
+      ? (await probeImg(`assets/bg/${name}.jpg`)) || `assets/bg/${name}.svg`
+      : `assets/bg/${name}.${(this.manifest.jpg || []).includes(name) ? 'jpg' : 'svg'}`;
     this.cache[name] = url;
     return url;
   },
@@ -112,15 +158,22 @@ const Bg = {
 // ── 剪影立绘（who→sprite 键由 CHAR_SPRITE 给；上场/换姿态/下场 + 说话人高亮） ──
 const Sprites = {
   els: {},   // who → DOM
+  manifest: null, probe: false, cache: {},
   async url(key) {
     // 立绘成图为 alpha PNG，占位为同名 SVG
-    if (!this.manifest) {
-      this.manifest = await fetch('assets/sprite/manifest.json')
-        .then(r => r.ok ? r.json() : { png: [] })
-        .catch(() => ({ png: [] }));
+    if (this.cache[key]) return this.cache[key];
+    if (!this.manifest && !this.probe) {
+      try {
+        const r = await fetch('assets/sprite/manifest.json');
+        if (!r.ok) throw new Error(r.status);
+        this.manifest = await r.json();
+      } catch (e) { this.probe = true; }
     }
-    const ext = (this.manifest.png || []).includes(key) ? 'png' : 'svg';
-    return `assets/sprite/${key}.${ext}`;
+    const url = this.probe
+      ? (await probeImg(`assets/sprite/${key}.png`)) || `assets/sprite/${key}.svg`
+      : `assets/sprite/${key}.${(this.manifest.png || []).includes(key) ? 'png' : 'svg'}`;
+    this.cache[key] = url;
+    return url;
   },
   async set(who, pose, pos) {
     const key = CHAR_SPRITE[who];

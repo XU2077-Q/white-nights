@@ -1,1 +1,16 @@
-{"jpg":[]}
+{
+  "jpg": [
+    "title",
+    "open_city",
+    "open_roof",
+    "open_canal",
+    "open_street",
+    "street",
+    "embankment",
+    "bridge",
+    "room",
+    "garret",
+    "morning_street",
+    "cg_hug"
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "items": [
+    {
+      "id": "title",
+      "status": "done",
+      "file": "assets/bg/title.jpg",
+      "kind": "bg"
+    },
+    {
+      "id": "open_city",
+      "status": "done",
+      "file": "assets/bg/open_city.jpg",
+      "kind": "bg"
+    },
+    {
+      "id": "open_roof",
+      "status": "done",
+      "file": "assets/bg/open_roof.jpg",
+      "kind": "bg"
+    },
+    {
+      "id": "open_canal",
+      "status": "done",
+      "file": "assets/bg/open_canal.jpg",
+      "kind": "bg"
+    },
+    {
+      "id": "open_street",
+      "status": "done",
+      "file": "assets/bg/open_street.jpg",
+      "kind": "bg"
+    },
+    {
+      "id": "street",
+      "status": "done",
+      "file": "assets/bg/street.jpg",
+      "kind": "bg"
+    },
+    {
+      "id": "embankment",
+      "status": "done",
+      "file": "assets/bg/embankment.jpg",
+      "kind": "bg"
+    },
+    {
+      "id": "bridge",
+      "status": "done",
+      "file": "assets/bg/bridge.jpg",
+      "kind": "bg"
+    },
+    {
+      "id": "room",
+      "status": "done",
+      "file": "assets/bg/room.jpg",
+      "kind": "bg"
+    },
+    {
+      "id": "garret",
+      "status": "done",
+      "file": "assets/bg/garret.jpg",
+      "kind": "bg"
+    },
+    {
+      "id": "morning_street",
+      "status": "done",
+      "file": "assets/bg/morning_street.jpg",
+      "kind": "bg"
+    },
+    {
+      "id": "cg_hug",
+      "status": "done",
+      "file": "assets/bg/cg_hug.jpg",
+      "kind": "cg"
+    },
+    {
+      "id": "dreamer_default",
+      "status": "done",
+      "file": "assets/sprite/dreamer_default.png",
+      "kind": "sprite"
+    },
+    {
+      "id": "dreamer_think",
+      "status": "done",
+      "file": "assets/sprite/dreamer_think.png",
+      "kind": "sprite"
+    },
+    {
+      "id": "dreamer_excited",
+      "status": "done",
+      "file": "assets/sprite/dreamer_excited.png",
+      "kind": "sprite"
+    },
+    {
+      "id": "dreamer_shy",
+      "status": "done",
+      "file": "assets/sprite/dreamer_shy.png",
+      "kind": "sprite"
+    },
+    {
+      "id": "nastenka_smile",
+      "status": "done",
+      "file": "assets/sprite/nastenka_smile.png",
+      "kind": "sprite"
+    },
+    {
+      "id": "nastenka_sad",
+      "status": "done",
+      "file": "assets/sprite/nastenka_sad.png",
+      "kind": "sprite"
+    },
+    {
+      "id": "nastenka_expect",
+      "status": "done",
+      "file": "assets/sprite/nastenka_expect.png",
+      "kind": "sprite"
+    },
+    {
+      "id": "nastenka_tears",
+      "status": "done",
+      "file": "assets/sprite/nastenka_tears.png",
+      "kind": "sprite"
+    },
+    {
+      "id": "nastenka_joy",
+      "status": "done",
+      "file": "assets/sprite/nastenka_joy.png",
+      "kind": "sprite"
+    },
+    {
+      "id": "lodger_default",
+      "status": "done",
+      "file": "assets/sprite/lodger_default.png",
+      "kind": "sprite"
+    },
+    {
+      "id": "lodger_serious",
+      "status": "done",
+      "file": "assets/sprite/lodger_serious.png",
+      "kind": "sprite"
+    },
+    {
+      "id": "granny_default",
+      "status": "done",
+      "file": "assets/sprite/granny_default.png",
+      "kind": "sprite"
+    }
+  ]
+}

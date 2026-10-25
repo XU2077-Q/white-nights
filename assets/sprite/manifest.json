@@ -1,1 +1,16 @@
-{"png":[]}
+{
+  "png": [
+    "dreamer_default",
+    "dreamer_think",
+    "dreamer_excited",
+    "dreamer_shy",
+    "nastenka_smile",
+    "nastenka_sad",
+    "nastenka_expect",
+    "nastenka_tears",
+    "nastenka_joy",
+    "lodger_default",
+    "lodger_serious",
+    "granny_default"
+  ]
+}
