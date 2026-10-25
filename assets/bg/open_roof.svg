@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0.00" stop-color="#232c4c"/>
+      <stop offset="0.33" stop-color="#3a4a74"/>
+      <stop offset="0.67" stop-color="#6a74a0"/>
+      <stop offset="1.00" stop-color="#b8a888"/>
+    </linearGradient>
+    <filter id="blur60" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="60"/></filter>
+    <filter id="blur55" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="55"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1100" cy="380" r="240" fill="#d8d4c0" opacity="0.4" filter="url(#blur70)"/>
+  <g><circle cx="97" cy="31" r="0.8" fill="#dfe6f2" opacity="0.25"/><circle cx="270" cy="120" r="1.4" fill="#dfe6f2" opacity="0.35"/><circle cx="443" cy="209" r="2" fill="#dfe6f2" opacity="0.45"/><circle cx="616" cy="298" r="0.8" fill="#dfe6f2" opacity="0.55"/><circle cx="789" cy="387" r="1.4" fill="#dfe6f2" opacity="0.65"/><circle cx="962" cy="56" r="2" fill="#dfe6f2" opacity="0.25"/><circle cx="1135" cy="145" r="0.8" fill="#dfe6f2" opacity="0.35"/><circle cx="1308" cy="234" r="1.4" fill="#dfe6f2" opacity="0.45"/><circle cx="1481" cy="323" r="2" fill="#dfe6f2" opacity="0.55"/><circle cx="54" cy="412" r="0.8" fill="#dfe6f2" opacity="0.65"/><circle cx="227" cy="81" r="1.4" fill="#dfe6f2" opacity="0.25"/><circle cx="400" cy="170" r="2" fill="#dfe6f2" opacity="0.35"/><circle cx="573" cy="259" r="0.8" fill="#dfe6f2" opacity="0.45"/><circle cx="746" cy="348" r="1.4" fill="#dfe6f2" opacity="0.55"/></g>
+  <ellipse cx="500" cy="420" rx="600" ry="130" fill="#98a2c4" opacity="0.28" filter="url(#blur60)"/>
+  <ellipse cx="1200" cy="500" rx="500" ry="120" fill="#6a74a0" opacity="0.3" filter="url(#blur55)"/>
+  
+  <path d="M0,900 L0,640 L300,560 L640,660 L640,900 Z" fill="#10142a"/>
+  <path d="M640,900 L640,700 L1050,600 L1600,720 L1600,900 Z" fill="#0c1020"/>
+  <path d="M300,560 L340,470 L380,560 Z" fill="#10142a"/>
+  <rect x="880" y="560" width="46" height="110" fill="#0c1020"/>
+  <rect x="1350" y="640" width="40" height="90" fill="#0c1020"/>
+  <g fill="#06081a" opacity="1">
+    <circle cx="1010" cy="624.4" r="9.9"/>
+    <path d="M998.3,637 Q1010,628 1021.7,637 L1019,682 L1001,682 Z"/>
+  </g>
+  <!-- open_roof -->
+</svg>

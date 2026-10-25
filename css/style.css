@@ -1,0 +1,330 @@
+/* 《白夜》视觉小说 */
+:root {
+  --night: #5f74ad;
+  --night-bright: #a8bce0;
+  --ink: #e8e4da;
+  --ink-dim: #b9b3a6;
+  --gold: #d5b97a;
+  --serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --kai: "Kaiti SC", "KaiTi", "STKaiti", var(--serif);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; background: #0a0c14; }
+body { font-family: var(--serif); color: var(--ink); }
+#app { position: fixed; inset: 0; }
+
+/* ── 背景（z:1）── */
+.bg {
+  position: absolute; inset: 0; z-index: 1;
+  background-size: cover; background-position: center;
+  opacity: 0; transition: opacity 1.4s ease, transform 32s linear;
+  will-change: transform, opacity;
+}
+.bg.show { opacity: 1; }
+/* Ken Burns：transition 驱动而非 keyframes，换章/换向都不跳帧。 */
+#app[data-kb="in"] .bg.show { transform: scale(1.08); }
+#app[data-kb="pan"] .bg.show { transform: scale(1.07) translateX(-2.2%); }
+#app[data-kb="out"] .bg { transform: scale(1.08); }
+#app[data-kb="out"] .bg.show { transform: scale(1); }
+
+/* ── 白夜天光（z:3）：顶部蓝紫光，opacity 由 glow 拍 0..1 内联控制 ── */
+#nightGlow {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  opacity: 0; transition: opacity 2.5s ease; mix-blend-mode: screen;
+  background:
+    linear-gradient(to bottom, rgba(140,165,220,.55), rgba(120,140,200,.18) 38%, transparent 70%),
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(190,205,245,.35), transparent 70%);
+}
+/* 烛光（z:3）：暖橙底光，不规则呼吸 */
+#glow {
+  position: absolute; left: 50%; bottom: 0; width: 120%; height: 70%;
+  transform: translateX(-50%); z-index: 3; pointer-events: none;
+  opacity: 0; transition: opacity 2.5s ease;
+  background: radial-gradient(ellipse 55% 60% at 50% 88%,
+    rgba(255,180,90,.16), rgba(255,150,60,.06) 45%, transparent 72%);
+}
+body.fx-candle #glow { opacity: 1; animation: candle 5.5s ease-in-out infinite; }
+@keyframes candle {
+  0% { opacity: .85; } 23% { opacity: 1; } 41% { opacity: .78; }
+  58% { opacity: .95; } 76% { opacity: .82; } 100% { opacity: .85; }
+}
+/* 雾（z:3）：两层大渐变反向漂移 */
+#fogA, #fogB {
+  position: absolute; inset: -20%; z-index: 3; pointer-events: none;
+  opacity: 0; transition: opacity 3s ease; mix-blend-mode: screen;
+}
+body.fx-fog #fogA, body.fx-fog #fogB { opacity: 1; }
+#fogA {
+  background:
+    radial-gradient(ellipse 60% 40% at 30% 70%, rgba(200,205,215,.14), transparent 70%),
+    radial-gradient(ellipse 45% 35% at 70% 30%, rgba(190,198,210,.10), transparent 70%);
+  animation: fogDriftA 60s ease-in-out infinite alternate;
+}
+#fogB {
+  background:
+    radial-gradient(ellipse 55% 45% at 65% 75%, rgba(205,210,220,.12), transparent 70%),
+    radial-gradient(ellipse 40% 30% at 25% 25%, rgba(185,192,205,.08), transparent 70%);
+  animation: fogDriftB 90s ease-in-out infinite alternate;
+}
+@keyframes fogDriftA { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
+@keyframes fogDriftB { from { transform: translateX(7%) translateY(-2%); } to { transform: translateX(-7%) translateY(2%); } }
+/* 粒子画布（z:4）：上升光尘，JS 唯一 rAF 驱动 */
+#fxCanvas {
+  position: absolute; inset: 0; z-index: 4; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0; transition: opacity 2s ease;
+}
+body.fx-dust #fxCanvas { opacity: 1; }
+
+#vignette {
+  position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%),
+    linear-gradient(to top, rgba(0,0,0,.55), transparent 34%);
+}
+
+/* ── 剪影立绘层（z:6）── */
+#sprites { position: absolute; inset: 0; z-index: 6; pointer-events: none; overflow: hidden; }
+.sprite {
+  position: absolute; bottom: 6%;
+  height: 74%; aspect-ratio: 2 / 3;
+  background-size: contain; background-repeat: no-repeat; background-position: bottom center;
+  opacity: 0; transform: translateY(24px) scale(.97); filter: brightness(.45);
+  transition: opacity .5s ease, transform .45s ease, filter .45s ease, left .6s ease;
+  will-change: transform, filter;
+}
+.sprite.pos-left   { left: 6%; }
+.sprite.pos-center { left: 50%; margin-left: calc(min(74vh, 74vw) * -0.25); }
+.sprite.pos-right  { left: auto; right: 6%; }
+.sprite.on { opacity: 1; }
+/* 说话人：前移高亮 + 白夜淡蓝微光描边 */
+.sprite.talk {
+  transform: translateY(-10px) scale(1.03);
+  filter: brightness(1) drop-shadow(0 0 14px rgba(168,188,224,.55)) drop-shadow(0 0 3px rgba(200,214,245,.8));
+}
+/* 在场未说话：退后压暗 */
+.sprite.idle { transform: translateY(4px) scale(.97); filter: brightness(.45); }
+
+/* ── 全屏 event CG（z:45）── */
+#cgLayer {
+  position: absolute; inset: 0; z-index: 45; background: #000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 1.6s ease;
+  cursor: pointer;
+}
+#cgLayer.show { opacity: 1; pointer-events: auto; }
+#cgImg {
+  position: absolute; inset: 0; background-size: contain; background-repeat: no-repeat;
+  background-position: center; transform: scale(1.02); transition: transform 8s ease;
+}
+#cgLayer.show #cgImg { transform: scale(1); }
+#cgHint {
+  position: absolute; bottom: 4%; left: 50%; transform: translateX(-50%);
+  font-size: 13px; letter-spacing: .4em; color: rgba(232,228,218,.65);
+  animation: bob 1.6s ease-in-out infinite;
+}
+
+/* ── 黑场 ── */
+#blackout {
+  position: absolute; inset: 0; background: #000; z-index: 30;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .8s ease;
+}
+#blackout.show { opacity: 1; pointer-events: auto; }
+#blackoutText { color: #4a5a8a; font-size: clamp(20px, 3vw, 34px); letter-spacing: .6em; font-family: var(--kai); }
+
+/* ── HUD ── */
+#hud {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 20;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 18px; pointer-events: none;
+}
+#chapterTag { font-size: 14px; letter-spacing: .25em; color: var(--ink-dim); opacity: .85; }
+#hudBtns { pointer-events: auto; display: flex; gap: 8px; }
+#hudBtns button {
+  font-family: var(--serif); font-size: 13px; color: var(--ink-dim);
+  background: rgba(10,12,18,.55); border: 1px solid rgba(232,228,218,.18);
+  padding: 5px 12px; cursor: pointer; border-radius: 2px; letter-spacing: .1em;
+  transition: color .2s, border-color .2s;
+}
+#hudBtns button:hover { color: var(--ink); border-color: rgba(232,228,218,.5); }
+
+/* ── 对话框 ── */
+#textbox {
+  position: absolute; left: 50%; bottom: 4.5%; transform: translateX(-50%);
+  width: min(880px, 92vw); z-index: 15;
+  background: linear-gradient(to bottom, rgba(8,10,16,.72), rgba(8,10,16,.86));
+  border: 1px solid rgba(232,228,218,.14);
+  border-left: 3px solid var(--night);
+  padding: 20px 30px 24px; border-radius: 3px;
+  cursor: pointer; backdrop-filter: blur(6px);
+  min-height: 128px;
+  transition: opacity .4s ease;
+}
+#textbox.hidden { opacity: 0; pointer-events: none; }
+#speaker {
+  font-size: 17px; letter-spacing: .18em; margin-bottom: 10px;
+  color: var(--gold); min-height: 22px;
+}
+#speaker.inner::before { content: '〈内心〉 '; color: var(--ink-dim); font-size: 13px; letter-spacing: .1em; }
+#line {
+  font-size: clamp(17px, 2.1vw, 21px); line-height: 1.85; letter-spacing: .04em;
+  min-height: 60px; white-space: pre-wrap;
+}
+#line.narr { font-family: var(--kai); color: #d6d1c4; }
+#nextHint {
+  position: absolute; right: 18px; bottom: 10px; font-size: 12px; color: var(--night-bright);
+  animation: bob 1.1s ease-in-out infinite; opacity: 0;
+}
+#nextHint.on { opacity: 1; }
+@keyframes bob { 50% { transform: translateY(4px); } }
+
+/* ── 导赏卡（机制保留，白夜不使用） ── */
+#noteCard {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(.96);
+  width: min(640px, 88vw); z-index: 25;
+  background: linear-gradient(160deg, rgba(20,22,34,.97), rgba(10,11,18,.97));
+  border: 1px solid rgba(213,185,122,.55);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.6), 0 18px 60px rgba(0,0,0,.7), inset 0 0 60px rgba(213,185,122,.05);
+  padding: 26px 34px 30px; border-radius: 2px;
+  opacity: 0; pointer-events: none; transition: opacity .5s ease, transform .5s ease;
+  cursor: pointer;
+}
+#noteCard.show { opacity: 1; pointer-events: auto; transform: translate(-50%,-50%) scale(1); }
+#noteHead {
+  font-size: 15px; letter-spacing: .9em; color: var(--gold); text-align: center;
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 1px solid rgba(213,185,122,.3);
+}
+#noteHead::before, #noteHead::after { content: '❧ '; color: rgba(213,185,122,.5); }
+#noteHead::after { content: ' ❧'; }
+#noteBody { font-size: clamp(15px, 1.8vw, 18px); line-height: 2.0; color: #e3dcc8; text-align: justify; }
+#noteHint { margin-top: 16px; text-align: center; font-size: 12px; color: rgba(213,185,122,.6); letter-spacing: .3em; }
+
+/* ── 回想面板 ── */
+#backlog {
+  position: absolute; inset: 0; z-index: 40; display: none;
+  background: rgba(5,6,10,.92); backdrop-filter: blur(4px);
+}
+#backlog.show { display: block; }
+#backlogInner {
+  position: absolute; inset: 6% 10% 12%;
+  overflow-y: auto; padding: 10px 24px;
+  font-size: 15px; line-height: 1.9; color: var(--ink-dim);
+}
+#backlogInner .bWho { color: var(--gold); margin-top: 14px; letter-spacing: .15em; }
+#backlogInner .bNote { color: var(--gold); border-left: 2px solid var(--gold); padding-left: 12px; margin-top: 14px; }
+#backlogInner .bText { color: #d6d1c4; }
+#backlogClose {
+  position: absolute; bottom: 4%; left: 50%; transform: translateX(-50%);
+  font-size: 13px; color: var(--ink-dim); cursor: pointer; letter-spacing: .2em;
+}
+#backlogClose:hover { color: var(--ink); }
+
+/* ── 开场序列（z:48）── */
+#opening {
+  position: absolute; inset: 0; z-index: 48; background: #06070d;
+  display: none; cursor: pointer;
+}
+#opening.show { display: block; }
+.openBg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0; transition: opacity 2.2s ease, transform 9s linear;
+}
+.openBg.show { opacity: 1; transform: scale(1.07); }
+#openText {
+  position: absolute; left: 50%; bottom: 12%; transform: translateX(-50%);
+  width: min(760px, 88vw); text-align: center;
+  font-family: var(--kai); font-size: clamp(17px, 2.4vw, 24px); line-height: 2.1;
+  color: #dde4f2; text-shadow: 0 2px 18px rgba(0,0,0,.9);
+  opacity: 0; transition: opacity 1.6s ease; white-space: pre-wrap;
+}
+#openText.show { opacity: 1; }
+#openSkip {
+  position: absolute; right: 22px; bottom: 18px;
+  font-size: 12px; letter-spacing: .25em; color: rgba(185,179,166,.55);
+}
+
+/* ── 标题画面 ── */
+#titleScreen {
+  position: absolute; inset: 0; z-index: 50;
+  background: #0a0c14;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 1.2s ease;
+}
+#titleScreen.gone { opacity: 0; pointer-events: none; }
+#titleArt {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: .5;
+  -webkit-mask-image: linear-gradient(to right, black 30%, transparent 85%);
+  mask-image: linear-gradient(to right, black 30%, transparent 85%);
+}
+#titleBlock { position: relative; text-align: center; padding: 0 20px; }
+#titleMain {
+  font-size: clamp(72px, 14vw, 150px); font-weight: 700; letter-spacing: .12em;
+  color: var(--ink); text-shadow: 0 6px 40px rgba(0,0,0,.8);
+}
+#titleMain .tBlue { color: var(--night-bright); }
+#titleMain .tGap { font-size: .5em; vertical-align: .35em; color: var(--ink-dim); margin: 0 .1em; }
+#titleSub { margin-top: 14px; font-size: clamp(14px, 1.8vw, 18px); letter-spacing: .45em; color: var(--ink-dim); }
+#titleBtns { margin-top: 48px; display: flex; gap: 18px; justify-content: center; }
+#titleBtns button, #chapterList button {
+  font-family: var(--serif); font-size: 16px; letter-spacing: .35em; text-indent: .35em;
+  color: var(--ink); background: transparent;
+  border: 1px solid rgba(232,228,218,.35); padding: 12px 34px; cursor: pointer;
+  transition: all .25s;
+}
+#titleBtns button:hover:not(:disabled) { border-color: var(--night-bright); color: #fff; background: rgba(95,116,173,.22); }
+#titleBtns button:disabled { opacity: .3; cursor: default; }
+#chapterList { margin-top: 22px; display: none; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 640px; }
+#chapterList.show { display: flex; }
+#chapterList button { font-size: 13px; padding: 8px 18px; letter-spacing: .12em; text-indent: .12em; color: var(--ink-dim); }
+#chapterList button:hover { color: var(--ink); border-color: var(--gold); }
+#titleFoot {
+  margin-top: 56px; font-size: 11px; line-height: 1.9; color: rgba(185,179,166,.5); letter-spacing: .08em;
+}
+
+/* ── 音频解锁 ── */
+#clickToStart {
+  position: absolute; inset: 0; z-index: 60; display: none;
+  align-items: center; justify-content: center;
+  background: rgba(5,6,10,.75); cursor: pointer;
+}
+#clickToStart.show { display: flex; }
+#clickToStart span { font-size: 18px; letter-spacing: .5em; color: var(--ink); animation: bob 1.6s infinite; }
+
+/* ── 演出特效：震屏 / 文字微颤 ── */
+#app.shake { animation: shake .45s linear; }
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0); }
+  15% { transform: translate(-6px, 2px); } 30% { transform: translate(5px, -3px); }
+  45% { transform: translate(-4px, 1px); } 60% { transform: translate(4px, 2px); }
+  75% { transform: translate(-2px, -1px); } 90% { transform: translate(2px, 0); }
+}
+#line.tremble { animation: tremble .18s linear infinite; }
+@keyframes tremble {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(.6px, -.4px); }
+  50% { transform: translate(-.5px, .3px); }
+  75% { transform: translate(.3px, .5px); }
+}
+
+@media (max-width: 700px) {
+  #textbox { padding: 14px 18px 18px; bottom: 3%; min-height: 110px; }
+  #backlogInner { inset: 4% 5% 10%; }
+  #hudBtns button { font-size: 11px; padding: 4px 8px; }
+  .sprite { height: 56%; bottom: 16%; }
+  .sprite.pos-left { left: 0; }
+  .sprite.pos-right { right: 0; }
+}
+
+/* 减弱动态：关掉一切循环动画与位移，保留不透明的静态呈现 */
+@media (prefers-reduced-motion: reduce) {
+  .bg, .bg.show { transition: opacity 1.4s ease !important; transform: none !important; }
+  #fogA, #fogB, #glow, #nextHint, #clickToStart span,
+  #line.tremble, #app.shake { animation: none !important; }
+  .sprite, .sprite.talk, .sprite.idle { transition: opacity .3s ease !important; transform: none !important; }
+  .openBg, .openBg.show { transition: opacity 2.2s ease !important; transform: none !important; }
+  #fxCanvas { display: none; }
+}

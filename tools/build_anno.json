@@ -1,0 +1,244 @@
+{
+  "scene": {
+    "第一夜":       { "bg": "street",         "music": "night",   "glow": 0.5, "fx": ["dust"],          "kb": "in" },
+    "第二夜":       { "bg": "embankment",     "music": "night",   "glow": 0.6, "fx": ["dust"],          "kb": "pan" },
+    "娜斯津卡的故事": { "bg": "room",          "music": "night",   "glow": 0.25, "fx": ["candle"],       "kb": "in" },
+    "第三夜":       { "bg": "embankment",     "music": "night",   "glow": 0.75, "fx": ["dust"],         "kb": "out" },
+    "第四夜":       { "bg": "embankment",     "music": "night",   "glow": 1,   "fx": ["dust"],          "kb": "in" },
+    "早晨":         { "bg": "morning_street", "music": "morning", "glow": 0,   "fx": ["fog"],           "kb": "out" }
+  },
+
+  "skip": {
+    "第二夜":       [[62, 76]],
+    "娜斯津卡的故事": [[85, 86]]
+  },
+
+  "fallback": {
+    "娜斯津卡的故事": [
+      { "range": [0, 47], "who": "娜斯津卡" }
+    ]
+  },
+
+  "fix": {
+    "第一夜": [
+      { "key": "起初您只想要我说两句话", "who": "娜斯津卡" },
+      { "key": "正因为了解您", "who": "娜斯津卡" },
+      { "key": "但恋爱可不行", "who": "娜斯津卡" }
+    ],
+    "第二夜": [
+      { "key": "我叫娜斯津卡", "who": "娜斯津卡" },
+      { "key": "娜斯津卡！就这些", "who": "幻想家" },
+      { "key": "觉得少吗？恰恰相反", "who": "幻想家" },
+      { "key": "十分荒唐可笑的身世", "who": "幻想家" },
+      { "key": "娜斯津卡插话了", "who": "娜斯津卡" },
+      { "key": "您看着他时，会不会相信", "who": "幻想家" },
+      { "key": "难道他们真的没有手挽手", "who": "幻想家" },
+      { "key": "难道不是她在分手的深夜", "who": "幻想家" },
+      { "key": "难道这一切的一切都是梦幻", "who": "幻想家" },
+      { "key": "还包括这座祖传的古怪房子", "who": "幻想家" },
+      { "key": "他们是多么痛苦，多么担心", "who": "幻想家" },
+      { "key": "在满是长春花和玫瑰花的阳台上", "who": "幻想家" },
+      { "key": "他们狂喜得大声呼叫", "who": "幻想家" },
+      { "key": "啊，娜斯津卡，您一定能同意", "who": "幻想家" },
+      { "key": "就像一个刚把从邻居家果园里偷来的苹果", "who": "幻想家" },
+      { "key": "莫非您当真这样过一辈子", "who": "娜斯津卡" },
+      { "key": "她深感不安地说", "who": "娜斯津卡" },
+      { "key": "我情不自禁地喊了起来", "who": "幻想家" },
+      { "key": "这都是些什么样的回忆啊", "who": "幻想家" },
+      { "key": "还想起那时的梦想也是可悲的", "who": "幻想家" },
+      { "key": "还会自问：在这些岁月中", "who": "幻想家" },
+      { "key": "幻想的世界将黯然失色", "who": "幻想家" }
+    ],
+    "娜斯津卡的故事": [
+      { "key": "我笑着插了话", "who": "幻想家" },
+      { "key": "我随便一问", "who": "幻想家" },
+      { "key": "别开口，听我说", "who": "娜斯津卡" },
+      { "key": "事情凑巧，有一次我在楼梯上", "who": "娜斯津卡" },
+      { "key": "过了一星期，我又在楼梯上碰见他", "who": "娜斯津卡" },
+      { "key": "我的天，叫人多高兴呀", "who": "娜斯津卡" },
+      { "key": "奶奶，没有情书", "who": "娜斯津卡" },
+      { "key": "她叫玛申卡", "who": "娜斯津卡" },
+      { "key": "我不想骗奶奶", "who": "娜斯津卡" },
+      { "key": "我再也不能跟奶奶一起过日子", "who": "娜斯津卡" },
+      { "key": "不觉得无聊吗", "who": "年轻房客" },
+      { "key": "您是个好姑娘", "who": "年轻房客" },
+      { "key": "您肯跟我一起去看戏吗", "who": "年轻房客" },
+      { "key": "别让奶奶知道就得了", "who": "年轻房客" },
+      { "key": "再也没有讲什么话", "who": "年轻房客" },
+      { "key": "这正是那个理发师", "who": "年轻房客" },
+      { "key": "我一点办法也没有", "who": "年轻房客" },
+      { "key": "眼里也噙着泪水", "who": "年轻房客" },
+      { "key": "难道可以这样吗", "who": "娜斯津卡" },
+      { "key": "我接着说，仍然坚持自己的意见", "who": "幻想家" },
+      { "key": "这样做好像我要强求人家", "who": "娜斯津卡" },
+      { "key": "用不着道歉", "who": "幻想家" },
+      { "key": "您是个高尚的人", "who": "幻想家" },
+      { "key": "要知道先得写好信啊", "who": "幻想家" },
+      { "key": "有点不好意思地回答道", "who": "娜斯津卡" },
+      { "key": "我用委婉的口吻欲言又止", "who": "幻想家" },
+      { "key": "难道没办法帮您减轻痛苦吗", "who": "幻想家" }
+    ],
+    "第三夜": [
+      { "key": "我开始解释道", "who": "幻想家" },
+      { "key": "我正在琢磨您这个人呢", "who": "娜斯津卡" }
+    ],
+    "第四夜": [
+      { "key": "我向她高声呼唤", "who": "幻想家" },
+      { "key": "我刚开口，可一看见她", "who": "幻想家" },
+      { "key": "连一行字，一行字都不肯写", "who": "娜斯津卡" },
+      { "key": "只要想起我第一次主动去找他", "who": "娜斯津卡" },
+      { "key": "您评评理看", "who": "娜斯津卡" },
+      { "key": "您是怎么、怎么想的呢", "who": "娜斯津卡" },
+      { "key": "在这儿坐下，娜斯津卡", "who": "幻想家" },
+      { "key": "她停止哭泣", "who": "娜斯津卡" },
+      { "key": "总之，我根本听不懂您的话", "who": "娜斯津卡" },
+      { "key": "我该怎么办啊", "who": "幻想家" },
+      { "key": "让泪水流吧", "who": "幻想家" },
+      { "key": "我却早想从您的身旁跑开", "who": "幻想家" },
+      { "key": "我并不想欺骗您", "who": "娜斯津卡" },
+      { "key": "我要离开您，这就是我的想法", "who": "幻想家" },
+      { "key": "您能再等一会儿吗", "who": "娜斯津卡" },
+      { "key": "等什么？怎么了", "who": "幻想家" },
+      { "key": "但是这种爱就要终结", "who": "娜斯津卡" },
+      { "key": "您往天上看看", "who": "幻想家" },
+      { "key": "那个人是谁啊", "who": "幻想家" },
+      { "key": "是你呀！", "who": "年轻房客" }
+    ],
+    "早晨": [
+      { "key": "您看吧，也许上面写着是谁寄来的", "who": "玛特廖娜" },
+      { "key": "什么事，老妈妈？", "who": "幻想家" },
+      { "key": "我把天花板上的蜘蛛网全都扫掉了", "who": "玛特廖娜" }
+    ]
+  },
+
+  "split": {
+    "第四夜": [
+      {
+        "key": "搂住我的脖子",
+        "at": "然后，她没对我说出一句话",
+        "beats": [
+          { "type": "sprite", "who": "娜斯津卡", "off": true },
+          { "type": "sprite", "who": "年轻房客", "off": true },
+          { "type": "cg", "set": "hug", "text": "她刚扑进他的怀里，竟忽地向我转过身来，双手一把搂住我的脖子，狂热地用力吻了吻我。" }
+        ]
+      }
+    ]
+  },
+
+  "insert": {
+    "第一夜": [
+      { "key": "那边有个女子", "beats": [
+        { "type": "bg", "set": "embankment" },
+        { "type": "sprite", "who": "娜斯津卡", "pose": "sad", "pos": "right" } ] },
+      { "key": "请允许我挎着您的胳膊", "beats": [
+        { "type": "sprite", "who": "幻想家", "pose": "default", "pos": "left" } ] },
+      { "key": "怎么会这样？真——的——吗", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "smile" } ] },
+      { "key": "我明天大概还会来这儿", "beats": [
+        { "type": "glow", "set": 0.65 } ] },
+      { "key": "我同意。", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "off": true },
+        { "type": "sprite", "who": "幻想家", "off": true } ] }
+    ],
+
+    "第二夜": [
+      { "key": "看，您总算熬过来了", "beats": [
+        { "type": "black", "text": "第二夜" },
+        { "type": "sprite", "who": "幻想家", "pose": "default", "pos": "left" },
+        { "type": "sprite", "who": "娜斯津卡", "pose": "smile", "pos": "right" } ] },
+      { "key": "接着哈哈大笑起来", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "joy" } ] },
+      { "key": "那就听我讲一讲十分荒唐可笑的身世", "beats": [
+        { "type": "sprite", "who": "幻想家", "pose": "excited" } ] },
+      { "key": "眼睛里闪烁着晶莹的泪珠", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "tears" } ] },
+      { "key": "我要的不只是聪明的主意", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "smile" } ] },
+      { "key": "现在我要讲自己的故事了", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "expect" } ] }
+    ],
+
+    "娜斯津卡的故事": [
+      { "key": "我的故事有一半您已经知道了", "beats": [
+        { "type": "black", "text": "娜斯津卡的故事" },
+        { "type": "sprite", "who": "幻想家", "pose": "default", "pos": "left" },
+        { "type": "sprite", "who": "娜斯津卡", "pose": "smile", "pos": "right" } ] },
+      { "key": "我有个老奶奶", "beats": [
+        { "type": "sprite", "who": "祖母", "pose": "default", "pos": "center" } ] },
+      { "key": "一天早上，房客跑来找我们", "beats": [
+        { "type": "sprite", "who": "祖母", "off": true },
+        { "type": "sprite", "who": "年轻房客", "pose": "default", "pos": "center" } ] },
+      { "key": "整整一年前的五月里", "beats": [
+        { "type": "sprite", "who": "年轻房客", "pose": "serious" } ] },
+      { "key": "第二天他走了", "beats": [
+        { "type": "sprite", "who": "年轻房客", "off": true } ] },
+      { "key": "可是他到现在还不露面", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "tears" } ] },
+      { "key": "这跟我想的一个样", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "joy" } ] },
+      { "key": "脸红得好似玫瑰花", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "expect" } ] },
+      { "key": "便箭也似的向她住的那条小巷飞跑而去", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "off": true } ] }
+    ],
+
+    "第三夜": [
+      { "key": "今天是个令人烦闷的日子", "beats": [
+        { "type": "black", "text": "第三夜" } ] },
+      { "key": "您知道我为什么这么高兴吗", "beats": [
+        { "type": "sprite", "who": "幻想家", "pose": "default", "pos": "left" },
+        { "type": "sprite", "who": "娜斯津卡", "pose": "joy", "pos": "right" } ] },
+      { "key": "您知道我这一整天是怎么熬过来的吗", "beats": [
+        { "type": "sprite", "who": "幻想家", "pose": "excited" } ] },
+      { "key": "差不多就这些事", "beats": [
+        { "type": "sprite", "who": "幻想家", "pose": "shy" } ] },
+      { "key": "她挽起我的胳膊，笑了起来", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "smile" } ] },
+      { "key": "她想勉强一笑，让自己平静下来", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "tears" } ] },
+      { "key": "看来他今天不会来了", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "sad" } ] },
+      { "key": "现在我自己也看得出，明天他才会来", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "smile" } ] },
+      { "key": "在我们分别的当口", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "off": true },
+        { "type": "sprite", "who": "幻想家", "off": true } ] }
+    ],
+
+    "第四夜": [
+      { "key": "这一切是怎样结束的啊", "beats": [
+        { "type": "black", "text": "第四夜" },
+        { "type": "sprite", "who": "幻想家", "pose": "default", "pos": "left" },
+        { "type": "sprite", "who": "娜斯津卡", "pose": "expect", "pos": "right" } ] },
+      { "key": "她的脸色苍白得可怕", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "sad" } ] },
+      { "key": "不必安慰我", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "tears" } ] },
+      { "key": "您是在折磨我", "beats": [
+        { "type": "sprite", "who": "幻想家", "pose": "excited" } ] },
+      { "key": "娜斯津卡完全心慌意乱了", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "expect" } ] },
+      { "key": "一头扑在我的肩上", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "tears" } ] },
+      { "key": "我们一会儿笑，一会儿哭", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "joy" },
+        { "type": "sprite", "who": "幻想家", "pose": "default" } ] },
+      { "key": "您往天上看看", "beats": [
+        { "type": "sprite", "who": "幻想家", "pose": "excited" } ] },
+      { "key": "她默默地站着，呆若木鸡", "beats": [
+        { "type": "sprite", "who": "娜斯津卡", "pose": "expect" } ] },
+      { "key": "从我们身旁走过一个年轻人", "beats": [
+        { "type": "sprite", "who": "年轻房客", "pose": "default", "pos": "center" } ] },
+      { "key": "我久久伫立", "beats": [
+        { "type": "sprite", "who": "幻想家", "pose": "think" } ] }
+    ],
+
+    "早晨": [
+      { "key": "我的白夜是在清晨结束的", "beats": [
+        { "type": "black", "text": "早晨" },
+        { "type": "sprite", "who": "幻想家", "pose": "think", "pos": "left" } ] },
+      { "key": "整整一分钟的狂喜啊", "beats": [
+        { "type": "glow", "set": 0.35 } ] }
+    ]
+  }
+}

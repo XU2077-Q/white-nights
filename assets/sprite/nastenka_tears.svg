@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536">
+  <defs>
+    <filter id="rim" x="-20%" y="-20%" width="140%" height="140%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="5" result="d"/>
+      <feFlood flood-color="#7d8fc4" flood-opacity="0.55" result="f"/>
+      <feComposite in="f" in2="d" operator="in" result="r"/>
+      <feMerge><feMergeNode in="r"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g fill="#10142a" opacity="0.93" filter="url(#rim)">
+    
+    <g transform="rotate(5.2 512 430)">
+      <circle cx="512" cy="310" r="64"/>
+      <path d="M448,300 Q440,220 512,208 Q584,220 576,300 Q590,360 572,420 L452,420 Q434,360 448,300 Z"/>
+    </g>
+    <path d="M512,378 C444,410 424,470 428,560 L400,900 Q360,1240 330,1480 L694,1480 Q664,1240 624,900 L596,560 C600,470 580,410 512,378 Z"/>
+    <path d="M600,700 Q660,560 580,460" stroke="#0d1124" stroke-width="46" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- nastenka_tears 占位 -->
+</svg>

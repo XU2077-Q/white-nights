@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0.00" stop-color="#20232e"/>
+      <stop offset="0.50" stop-color="#2a2e3c"/>
+      <stop offset="1.00" stop-color="#14161e"/>
+    </linearGradient>
+    <filter id="blur50" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="50"/></filter>
+    <filter id="blur55" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="55"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1150" cy="300" r="110" fill="#a8b8d8" opacity="0.45" filter="url(#blur26)"/>
+  
+  <ellipse cx="1150" cy="380" rx="320" ry="160" fill="#5e6c8c" opacity="0.25" filter="url(#blur50)"/>
+  <ellipse cx="400" cy="650" rx="500" ry="140" fill="#282c38" opacity="0.4" filter="url(#blur55)"/>
+  
+  <path d="M0,0 L900,0 L700,240 L0,420 Z" fill="#121420"/>
+  <path d="M1600,0 L900,0 L700,240 L1600,380 Z" fill="#0e1018"/>
+  <g transform="translate(1090,240)">
+    <rect width="120" height="150" fill="#bccade" opacity="0.8"/>
+    <rect x="55" width="10" height="150" fill="#14161e"/>
+    <rect y="70" width="120" height="10" fill="#14161e"/>
+  </g>
+  <path d="M180,760 Q420,690 640,740 L660,800 L160,810 Z" fill="#0b0d14"/>
+  <ellipse cx="430" cy="725" rx="90" ry="26" fill="#05070c"/>
+  <g fill="#05070c" opacity="0.9">
+    <circle cx="430" cy="712.8" r="8.8"/>
+    <path d="M419.6,724 Q430,716 440.4,724 L438,764 L422,764 Z"/>
+  </g>
+  <!-- garret -->
+</svg>

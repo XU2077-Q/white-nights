@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0.00" stop-color="#5a6070"/>
+      <stop offset="0.33" stop-color="#7a8090"/>
+      <stop offset="0.67" stop-color="#9aa0a8"/>
+      <stop offset="1.00" stop-color="#b8b4a4"/>
+    </linearGradient>
+    <filter id="blur70" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="70"/></filter>
+    <filter id="blur55" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="55"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="500" cy="300" r="200" fill="#e0dccc" opacity="0.4" filter="url(#blur70)"/>
+  
+  <ellipse cx="800" cy="450" rx="900" ry="150" fill="#b0b4bc" opacity="0.4" filter="url(#blur70)"/>
+  <ellipse cx="400" cy="620" rx="500" ry="110" fill="#888c96" opacity="0.4" filter="url(#blur55)"/>
+  
+  <path d="M0,900 L0,400 L400,400 L500,900 Z" fill="#3c4048"/>
+  <path d="M1600,900 L1600,380 L1160,380 L1060,900 Z" fill="#34383f"/>
+  <g fill="#4a4e56">
+    <rect x="70" y="450" width="38" height="56"/><rect x="142" y="500" width="38" height="56"/><rect x="214" y="450" width="38" height="56"/><rect x="286" y="500" width="38" height="56"/>
+    <rect x="1230" y="440" width="38" height="56"/><rect x="1302" y="492" width="38" height="56"/><rect x="1374" y="440" width="38" height="56"/><rect x="1446" y="492" width="38" height="56"/>
+  </g>
+  <path d="M500,900 L630,560 L970,560 L1060,900 Z" fill="#484c55"/>
+  <g stroke="#c8ccd4" stroke-width="2" opacity="0.35">
+    <line x1="0" y1="0" x2="-26" y2="90"/><line x1="67" y1="137" x2="41" y2="227"/><line x1="134" y1="274" x2="108" y2="364"/><line x1="201" y1="411" x2="175" y2="501"/><line x1="268" y1="48" x2="242" y2="138"/><line x1="335" y1="185" x2="309" y2="275"/><line x1="402" y1="322" x2="376" y2="412"/><line x1="469" y1="459" x2="443" y2="549"/><line x1="536" y1="96" x2="510" y2="186"/><line x1="603" y1="233" x2="577" y2="323"/><line x1="670" y1="370" x2="644" y2="460"/><line x1="737" y1="7" x2="711" y2="97"/><line x1="804" y1="144" x2="778" y2="234"/><line x1="871" y1="281" x2="845" y2="371"/><line x1="938" y1="418" x2="912" y2="508"/><line x1="1005" y1="55" x2="979" y2="145"/><line x1="1072" y1="192" x2="1046" y2="282"/><line x1="1139" y1="329" x2="1113" y2="419"/><line x1="1206" y1="466" x2="1180" y2="556"/><line x1="1273" y1="103" x2="1247" y2="193"/><line x1="1340" y1="240" x2="1314" y2="330"/><line x1="1407" y1="377" x2="1381" y2="467"/><line x1="1474" y1="14" x2="1448" y2="104"/><line x1="1541" y1="151" x2="1515" y2="241"/>
+  </g>
+  <g fill="#22242a" opacity="1">
+    <circle cx="760" cy="762.6" r="12.100000000000001"/>
+    <path d="M745.7,778 Q760,767 774.3,778 L771,833 L749,833 Z"/>
+  </g>
+  <!-- morning_street -->
+</svg>

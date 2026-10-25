@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>白夜 · 视觉小说</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <!-- 背景双层（交叉淡化） -->
+  <div id="bgA" class="bg"></div>
+  <div id="bgB" class="bg"></div>
+
+  <!-- 动态场景层：白夜天光 / 烛光 / 雾 / 光尘 -->
+  <div id="nightGlow"></div>
+  <div id="glow"></div>
+  <div id="fogA"></div>
+  <div id="fogB"></div>
+  <canvas id="fxCanvas"></canvas>
+  <div id="vignette"></div>
+
+  <!-- 剪影立绘层 -->
+  <div id="sprites"></div>
+
+  <!-- 黑场 -->
+  <div id="blackout"><span id="blackoutText"></span></div>
+
+  <!-- 全屏 event CG -->
+  <div id="cgLayer"><div id="cgImg"></div><div id="cgHint">点击继续</div></div>
+
+  <!-- 顶部工具 -->
+  <div id="hud">
+    <div id="chapterTag"></div>
+    <div id="hudBtns">
+      <button id="btnBacklog" title="回想 (H)">回想</button>
+      <button id="btnMute" title="音乐开关 (M)">♪</button>
+      <button id="btnTitle" title="回标题">≡</button>
+    </div>
+  </div>
+
+  <!-- 对话框 -->
+  <div id="textbox">
+    <div id="speaker"></div>
+    <div id="line"></div>
+    <div id="nextHint">▼</div>
+  </div>
+
+  <!-- 导赏卡（机制保留，白夜不使用） -->
+  <div id="noteCard">
+    <div id="noteHead">导 赏</div>
+    <div id="noteBody"></div>
+    <div id="noteHint">点击继续</div>
+  </div>
+
+  <!-- 回想面板 -->
+  <div id="backlog">
+    <div id="backlogInner"></div>
+    <div id="backlogClose">关闭 (H)</div>
+  </div>
+
+  <!-- 开场序列 -->
+  <div id="opening">
+    <div class="openBg" id="openBgA"></div>
+    <div class="openBg" id="openBgB"></div>
+    <div id="openText"></div>
+    <div id="openSkip">点击 / 空格 跳过 ›</div>
+  </div>
+
+  <!-- 标题画面 -->
+  <div id="titleScreen">
+    <div id="titleArt"></div>
+    <div id="titleBlock">
+      <div id="titleMain"><span>白</span><span class="tGap">·</span><span class="tBlue">夜</span></div>
+      <div id="titleSub">陀思妥耶夫斯基 · 视觉小说</div>
+      <div id="titleBtns">
+        <button id="btnStart">开 始</button>
+        <button id="btnContinue" disabled>继 续</button>
+        <button id="btnChapters">章 节</button>
+      </div>
+      <div id="chapterList"></div>
+      <div id="titleFoot">
+        谷羽 译 · 果麦经典<br>
+        配乐：柴可夫斯基《四季·六月·船歌》等 · MusOpen 公版录音
+      </div>
+    </div>
+  </div>
+
+  <!-- 音频解锁遮罩 -->
+  <div id="clickToStart"><span>点击进入 · 建议佩戴耳机</span></div>
+</div>
+<script src="js/script.js"></script>
+<script src="js/engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+text/
+*.log
+build/
+.claude/
