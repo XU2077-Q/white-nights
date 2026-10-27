@@ -96,10 +96,10 @@ body.fx-dust #fxCanvas { opacity: 1; }
 .sprite.pos-center { left: 50%; margin-left: calc(min(74vh, 74vw) * -0.25); }
 .sprite.pos-right  { left: auto; right: 6%; }
 .sprite.on { opacity: 1; }
-/* 说话人：前移高亮 + 白夜淡蓝微光描边 */
+/* 说话人：前移高亮（彩色立绘版去掉微光描边，与 Ren'Py 版一致） */
 .sprite.talk {
   transform: translateY(-10px) scale(1.03);
-  filter: brightness(1) drop-shadow(0 0 14px rgba(168,188,224,.55)) drop-shadow(0 0 3px rgba(200,214,245,.8));
+  filter: brightness(1.06);
 }
 /* 在场未说话：退后压暗 */
 .sprite.idle { transform: translateY(4px) scale(.97); filter: brightness(.45); }

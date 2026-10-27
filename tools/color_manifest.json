@@ -1,0 +1,52 @@
+{
+  "items": [
+    {
+      "id": "dreamer_default",
+      "status": "done"
+    },
+    {
+      "id": "dreamer_think",
+      "status": "done"
+    },
+    {
+      "id": "dreamer_excited",
+      "status": "done"
+    },
+    {
+      "id": "dreamer_shy",
+      "status": "done"
+    },
+    {
+      "id": "nastenka_smile",
+      "status": "done"
+    },
+    {
+      "id": "nastenka_sad",
+      "status": "done"
+    },
+    {
+      "id": "nastenka_expect",
+      "status": "done"
+    },
+    {
+      "id": "nastenka_tears",
+      "status": "done"
+    },
+    {
+      "id": "nastenka_joy",
+      "status": "done"
+    },
+    {
+      "id": "lodger_default",
+      "status": "done"
+    },
+    {
+      "id": "lodger_serious",
+      "status": "done"
+    },
+    {
+      "id": "granny_default",
+      "status": "done"
+    }
+  ]
+}
