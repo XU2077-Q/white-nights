@@ -58,7 +58,7 @@ const emit = s => L.push(s);
 
 // ============ 头部：角色 / 图像 / 变换 ============
 emit('## 《白夜》Ren' + "'" + 'Py 版剧本 —— 由 tools/export_renpy.js 从 js/script.js 全量转写，勿手改');
-emit('## 谷羽译本全文 655 拍 · 六章 · 彩色立绘 lit/dim 演出与网页版一致');
+emit('## 谷羽译本全文 655 拍 · 六章 · 剪影立绘 lit/dim 演出与网页版一致');
 emit('');
 emit('define nn = Character(None, what_font="fonts/LXGWWenKai-Regular.ttf", what_color="#e6ecf7")');
 for (const [who, color] of Object.entries(CHAR_COLORS)) {
@@ -79,6 +79,8 @@ for (const n of [...bgNames].sort()) {
 for (const [sp, poses] of Object.entries(poseNames)) {
     for (const p of poses.sort()) {
         emit(`image ${sp} ${p} = "images/sprite/${sp}_${p}.png"`);
+        // 微光描边层：模糊烘焙进 im.MatrixColor（im.Blur 走 CPU），transform blur 会走 GPU 串原图暖色鬼影
+        emit(`image ${sp} ${p} glow = im.MatrixColor(im.Blur("images/sprite/${sp}_${p}.png", 16), im.matrix.colorize("#8fb4e8", "#8fb4e8"))`);
     }
 }
 emit('');
@@ -92,6 +94,10 @@ emit('transform sp_lit:');
 emit('    easein 0.45 matrixcolor BrightnessMatrix(0.0) yoffset 0 zoom 0.63 xoffset 0');
 emit('transform sp_dim:');
 emit('    easein 0.45 matrixcolor BrightnessMatrix(-0.55) yoffset 14 zoom 0.60 xoffset 0');
+emit('transform sp_glowfx:');
+emit('    zoom 0.63 xoffset 0 yoffset 0');
+emit('    alpha 0.0');
+emit('    easein 0.45 alpha 0.8');
 for (const v of [...glowVals].sort((a, b) => a - b)) {
     emit(`transform glow_${Math.round(v * 100)}:`);
     emit(`    alpha ${(v * 0.32).toFixed(2)}`);
@@ -129,12 +135,18 @@ function showSprite(who, poseChanged) {
     const st = stage[who];
     const sp = CHAR_SPRITE[who];
     emit(`    show ${sp} ${st.pose} at pos_${st.pos}, ${st.lit ? 'sp_lit' : 'sp_dim'}`);
+    if (st.lit) emit(`    show ${sp} ${st.pose} glow as ${sp}_glow at pos_${st.pos}, sp_glowfx behind ${sp}`);
+    else emit(`    hide ${sp}_glow`);
 }
 
 function spriteBeat(b) {
     const who = b.who;
     if (b.off) {
-        if (stage[who]) { emit(`    hide ${CHAR_SPRITE[who]} with dissolve`); delete stage[who]; }
+        if (stage[who]) {
+            emit(`    hide ${CHAR_SPRITE[who]}_glow with dissolve`);
+            emit(`    hide ${CHAR_SPRITE[who]} with dissolve`);
+            delete stage[who];
+        }
         return;
     }
     const pose = b.pose || 'default';
