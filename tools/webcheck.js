@@ -60,7 +60,7 @@ class CDP {
       }
     });
   }
-  send(method, params = {}, timeoutMs = 30000) {
+  send(method, params = {}, timeoutMs = 120000) {
     const id = ++this.id;
     this.ws.send(JSON.stringify({ id, method, params }));
     return new Promise((resolve, reject) => {
