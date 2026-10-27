@@ -2,6 +2,10 @@
 
 陀思妥耶夫斯基《白夜》视觉小说（谷羽译本全文收录），网页版。
 
+**在线游玩：https://xu2077-q.github.io/white-nights/**
+
+Ren'Py 桌面版（Windows 打包下载）：[XU2077-Q/white-nights-renpy](https://github.com/XU2077-Q/white-nights-renpy)
+
 ## 运行
 
 静态站点，无构建：直接打开 `index.html`（或任意静态服务器托管）。章节选择、回想（H）、音乐开关（M）、自动存档。
